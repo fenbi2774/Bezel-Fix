@@ -1,30 +1,79 @@
-# Automatically build the project and run any configured tests for every push
-# and submitted pull request. This can help catch issues that only occur on
-# certain platforms or Java versions, and provides a first line of defence
-# against bad commits.
+name: Build and Release on Tag
 
-name: build
-on: [pull_request, push]
+on:
+  push:
+    tags:
+      - 'v*'          # 只在推送 v1.0.0、v0.1-beta 等 tag 时触发
+  # 你也可以保留 pull_request 和普通 push 的构建测试（可选）
+  pull_request:
+  push:
+    branches: [ main, master ]
 
 jobs:
   build:
     runs-on: ubuntu-24.04
     steps:
-      - name: checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v4
-      - name: validate gradle wrapper
+
+      - name: Validate Gradle wrapper
         uses: gradle/actions/wrapper-validation@v4
-      - name: setup jdk
+
+      - name: Setup JDK
         uses: actions/setup-java@v4
         with:
-          java-version: '25'
+          java-version: '25'              # 根据你的 mod 支持的 Java 版本调整（1.21+ 常用 21 或 17）
           distribution: 'microsoft'
-      - name: make gradle wrapper executable
+
+      - name: Make gradle wrapper executable
         run: chmod +x ./gradlew
-      - name: build
+
+      - name: Build with Gradle
         run: ./gradlew build
-      - name: capture build artifacts
+
+      - name: Upload build artifacts (for debugging)
+        if: always()                        # 即使失败也上传，便于排查
         uses: actions/upload-artifact@v4
         with:
-          name: Artifacts
+          name: build-artifacts
           path: build/libs/
+          retention-days: 7
+
+  release:
+    # 只在 tag 推送时才执行 release 部分
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build                          # 依赖 build 成功
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write                     # 必须有这个权限才能创建 release
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download built artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+          path: build/libs/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          # 自动使用推送的 tag 作为版本
+          tag_name: ${{ github.ref_name }}
+          
+          # 自动生成 release notes（基于 commits 和 PR 标题，非常方便）
+          generate_release_notes: true
+          
+          # 是否标记为预发布版（beta、alpha 等）
+          prerelease: ${{ contains(github.ref_name, 'beta') || contains(github.ref_name, 'alpha') || contains(github.ref_name, 'rc') }}
+          
+          # 上传所有 build/libs 下的 jar（通常只有一个主 jar，也可能有 sources.jar）
+          files: build/libs/*.jar
+          
+          # 可选：自定义 release 标题（默认就是 tag 名）
+          name: Release ${{ github.ref_name }}
+          
+          # 可选：附加 body 内容（如果有 CHANGELOG.md，可以读取）
+          # body_path: CHANGELOG.md
