@@ -11,6 +11,8 @@ on:
   push:
     tags:
       - 'v*'
+  # 推送以 v 开头的 tag 时：构建 + 创建 Release
+
 
   # 推送以 v 开头的 tag 时：构建 + 创建 Release
 
