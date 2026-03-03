@@ -9,6 +9,13 @@
 ### 项目简介
 Bezel Fix 是一个专为低端设备优化的 Fabric 模组，旨在修复在使用 PojavLauncher 运行 Minecraft 1.21.11 时出现的**方块选择框**和 **F3 准心**渲染错误。除了核心修复功能外，它还提供了一系列增强视觉体验的可定制功能。
 
+https://github.com/user-attachments/assets/92cd644c-d865-499e-aa85-f62582624c1e
+![Screenshot1](https://github.com/user-attachments/assets/2750223e-6934-4f2c-8aac-eaeb7946d853)
+![Screenshot2](https://github.com/user-attachments/assets/8cca3078-94b5-4619-a9ca-2fee86ffb556)
+![Screenshot3](https://github.com/user-attachments/assets/f7c4c9fb-73c2-437b-a3c6-1b2f13b421c6)
+![Screenshot4](https://github.com/user-attachments/assets/d3d74769-2c22-46b3-be4b-9eb426bc9a8a)
+![Screenshot5](https://github.com/user-attachments/assets/ccc843b1-1f67-448b-b303-fee52f6c6ded)
+
 > [!IMPORTANT]
 > **AI 辅助声明**：本项目的部分代码和文档是由 AI (Trae / Gemini) 辅助生成和优化的。
 
