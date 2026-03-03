@@ -5,12 +5,6 @@
 ---
 
 <video src="https://github.com/user-attachments/assets/92cd644c-d865-499e-aa85-f62582624c1e" controls autoplay loop muted></video>
-![Screenshot1](https://github.com/user-attachments/assets/2750223e-6934-4f2c-8aac-eaeb7946d853)
-![Screenshot2](https://github.com/user-attachments/assets/8cca3078-94b5-4619-a9ca-2fee86ffb556)
-![Screenshot3](https://github.com/user-attachments/assets/f7c4c9fb-73c2-437b-a3c6-1b2f13b421c6)
-![Screenshot4](https://github.com/user-attachments/assets/d3d74769-2c22-46b3-be4b-9eb426bc9a8a)
-![Screenshot5](https://github.com/user-attachments/assets/ccc843b1-1f67-448b-b303-fee52f6c6ded)
-
 
 ## 简体中文
 
