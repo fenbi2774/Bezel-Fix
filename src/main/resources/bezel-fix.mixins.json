@@ -1,0 +1,15 @@
+{
+	"required": true,
+	"package": "com.bezelfix.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"MixinLevelRenderer",
+		"MixinDebugScreenOverlay"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

@@ -1,0 +1,38 @@
+{
+	"schemaVersion": 1,
+	"id": "bezel-fix",
+	"version": "${version}",
+	"name": "Bezel Fix",
+	"description": "Fixes block selection box and F3 crosshair rendering errors on low-end devices using PojavLauncher (Minecraft 1.21.11). Also includes customizable animated outlines.",
+	"authors": [
+		"Fenbi"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "MIT",
+	"icon": "assets/bezel-fix/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"client": [
+			"com.bezelfix.BezelFix"
+		],
+		"modmenu": [
+			"com.bezelfix.integration.ModMenuIntegration"
+		]
+	},
+	"mixins": [
+		"bezel-fix.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.17.3",
+		"minecraft": "1.21.11",
+		"java": ">=21",
+		"fabric-api": ">=0.139.4"
+	},
+	"recommends": {
+		"modmenu": "*",
+		"cloth-config2": "*"
+	}
+}
