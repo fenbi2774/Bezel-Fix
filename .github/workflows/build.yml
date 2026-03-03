@@ -9,14 +9,10 @@ on:
 
   # 推送到 main/master 分支时构建 & 测试
   push:
-    branches:
-      - main
-      - master
-
-  # 推送以 v 开头的 tag 时：构建 + 创建 Release
-  push:
     tags:
       - 'v*'
+
+  # 推送以 v 开头的 tag 时：构建 + 创建 Release
 
 jobs:
   build:
