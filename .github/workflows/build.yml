@@ -47,7 +47,6 @@ jobs:
           retention-days: 7
 
   release:
-    # 只在推送 tag 时执行 release 部分
     if: startsWith(github.ref, 'refs/tags/v')
     needs: build
     runs-on: ubuntu-24.04
@@ -57,6 +56,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # 重要！要取到完整的 tag 信息（默认浅克隆可能取不到 annotation）
 
       - name: Download built artifacts
         uses: actions/download-artifact@v4
@@ -64,11 +65,37 @@ jobs:
           name: build-artifacts
           path: build/libs/
 
+      - name: Extract annotated tag message
+        id: get_tag_msg
+        run: |
+          # 先确保 tag 被 fetch 进来（虽然 fetch-depth:0 通常够用，但保险起见）
+          git fetch origin \( {{ github.ref_name }}: \){{ github.ref_name }} --tags --no-tags?no --depth=1 || true
+
+          # 提取完整的 tag annotation（包括 subject + body）
+          TAG_MESSAGE=$(git tag -l --format='%(contents)' ${{ github.ref_name }})
+
+          # 如果是多行，保留格式；如果为空，就给个默认值
+          if [ -z "$TAG_MESSAGE" ]; then
+            TAG_MESSAGE="Release ${{ github.ref_name }} (no annotation provided)"
+          fi
+
+          # 输出到步骤变量（使用 delimiter 安全处理多行）
+          echo "message<<EOF" >> $GITHUB_OUTPUT
+          echo "$TAG_MESSAGE" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
-          name: "Release ${{ github.ref_name }} "
+          name: "Release ${{ github.ref_name }}"
+          # 在最前面放 tag message，后面可以加空行或其它说明
+          body: |
+            ${{ steps.get_tag_msg.outputs.message }}
+
+            ---
+
+            <!-- 下面是自动生成的 release notes（PRs、commits 等） -->
           generate_release_notes: true
           prerelease: ${{ contains(github.ref_name, 'beta') || contains(github.ref_name, 'alpha') || contains(github.ref_name, 'rc') }}
           files: build/libs/*.jar
