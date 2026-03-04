@@ -91,7 +91,6 @@ jobs:
           name: "Release ${{ github.ref_name }}"
           # 在最前面放 tag message，后面可以加空行或其它说明
           body: |
-            ${{ steps.get_tag_msg.outputs.message }}
 
             ---
 
