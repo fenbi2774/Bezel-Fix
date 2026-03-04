@@ -8,8 +8,7 @@
 		"Fenbi"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/fenbi2774/Bezel-Fix"
 	},
 	"license": "MIT",
 	"icon": "assets/bezel-fix/icon.png",
