@@ -1,6 +1,6 @@
 {
 	"required": true,
-	"package": "com.bezelfix.mixin",
+	"package": "com.PojavOutlineFix.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
 		"MixinLevelRenderer",

@@ -1,6 +1,6 @@
-package com.bezelfix.config;
+package com.PojavOutlineFix.config;
 
-import com.bezelfix.BezelFix;
+import com.PojavOutlineFix.PojavOutlineFix;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.fabricmc.loader.api.FabricLoader;
@@ -17,8 +17,8 @@ public class ModConfig {
     public static int color = new Color(68, 117, 255, 70).getRGB();
     public static int outlineColor = new Color(68, 117, 255, 150).getRGB();
     public static float thickness = 2.0f;
-    public static float cursorSize = 1.0f;
-    public static float cursorThickness = 1.0f;
+    public static float cursorSize = 4.0f;
+    public static float cursorThickness = 4.0f;
     public static boolean debug = false;
 
     public static class Slide {
@@ -27,7 +27,7 @@ public class ModConfig {
         public static String easing = "LINEAR";
     }
 
-    private static final File CONFIG_FILE = new File(FabricLoader.getInstance().getConfigDir().toFile(), BezelFix.MOD_ID + ".json");
+    private static final File CONFIG_FILE = new File(FabricLoader.getInstance().getConfigDir().toFile(), PojavOutlineFix.MOD_ID + ".json");
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public static void load() {
@@ -52,7 +52,7 @@ public class ModConfig {
                 Slide.easing = data.slideEasing;
             }
         } catch (Exception e) {
-            BezelFix.LOGGER.error("Failed to load config", e);
+            PojavOutlineFix.LOGGER.error("Failed to load config", e);
         }
     }
 
@@ -73,7 +73,7 @@ public class ModConfig {
             data.slideEasing = Slide.easing;
             GSON.toJson(data, writer);
         } catch (Exception e) {
-            BezelFix.LOGGER.error("Failed to save config", e);
+            PojavOutlineFix.LOGGER.error("Failed to save config", e);
         }
     }
 

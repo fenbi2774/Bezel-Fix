@@ -1,6 +1,6 @@
-package com.bezelfix.render;
+package com.PojavOutlineFix.render;
 
-import com.bezelfix.config.ModConfig;
+import com.PojavOutlineFix.config.ModConfig;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Camera;

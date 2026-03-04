@@ -1,11 +1,9 @@
-package com.bezelfix.render;
+package com.PojavOutlineFix.render;
 
-import com.bezelfix.BezelFix;
-import com.bezelfix.config.ModConfig;
+import com.PojavOutlineFix.PojavOutlineFix;
+import com.PojavOutlineFix.config.ModConfig;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.fabricmc.fabric.api.client.rendering.v1.world.WorldRenderContext;
-import net.fabricmc.fabric.api.client.rendering.v1.world.WorldRenderEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
@@ -31,15 +29,7 @@ public class BlockOutlineRenderer {
     private static AABB previousPosition = null;
     private static long lastChange = 0L;
 
-    public static void init() {
-        WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register((context, state) -> {
-            if (!ModConfig.enabled) return true;
-            return false;
-        });
-        WorldRenderEvents.END_MAIN.register(BlockOutlineRenderer::onRender);
-    }
-
-    private static void onRender(WorldRenderContext context) {
+    public static void render(PoseStack matrices, MultiBufferSource consumers) {
         if (!ModConfig.enabled) return;
 
         Minecraft mc = Minecraft.getInstance();
@@ -81,7 +71,7 @@ public class BlockOutlineRenderer {
             currentPosition.maxX != maxX || currentPosition.maxY != maxY || currentPosition.maxZ != maxZ) {
             
             if (ModConfig.debug) {
-                BezelFix.LOGGER.info("Block selection changed to: {}", blockPos);
+                PojavOutlineFix.LOGGER.info("Block selection changed to: {}", blockPos);
             }
 
             previousPosition = currentPosition;
@@ -99,12 +89,10 @@ public class BlockOutlineRenderer {
             maxZ = Mth.lerp(factor, previousPosition.maxZ, maxZ);
         }
 
-        renderOutline(context, minX, minY, minZ, maxX, maxY, maxZ);
+        renderOutline(matrices, consumers, minX, minY, minZ, maxX, maxY, maxZ);
     }
 
-    private static void renderOutline(WorldRenderContext context, double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
-        PoseStack matrices = context.matrices();
-        MultiBufferSource consumers = context.consumers();
+    private static void renderOutline(PoseStack matrices, MultiBufferSource consumers, double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
         if (matrices == null || consumers == null) return;
 
         Vec3 camPos = Minecraft.getInstance().gameRenderer.getMainCamera().position();
@@ -116,7 +104,7 @@ public class BlockOutlineRenderer {
         double z2 = maxZ - camPos.z;
 
         if (ModConfig.debug) {
-            BezelFix.LOGGER.info("Rendering at: [{}, {}, {}] to [{}, {}, {}]", x1, y1, z1, x2, y2, z2);
+            PojavOutlineFix.LOGGER.info("Rendering at: [{}, {}, {}] to [{}, {}, {}]", x1, y1, z1, x2, y2, z2);
         }
 
         if (ModConfig.fill) {
