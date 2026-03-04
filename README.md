@@ -85,20 +85,8 @@ Bezel Fix is a Fabric mod optimized for low-end devices, specifically designed t
    - [ModMenu](https://modrinth.com/mod/modmenu)
    - [Cloth Config API](https://modrinth.com/mod/cloth-config)
 
-### Installation
 
-1. Install \[Fabric Loader](https://fabricmc.net/).
-2. Place the Bezel Fix `.jar` in your `mods` folder.
-3. \*\*Required Dependencies\*\*:
-
-   \* \[Fabric API](https://modrinth.com/mod/fabric-api)
-
-4. \*\*Recommended\*\*:
-
-   \* \[ModMenu](https://modrinth.com/mod/modmenu)
-   \* \[Cloth Config API](https://modrinth.com/mod/cloth-config)
-
-   ### Build
+### Build
 
    To build a Bezel Fix mod from source, make sure you have cloned the project repository and installed JDK 21. The project uses Fabric Loom and Gradle to build the system
 
